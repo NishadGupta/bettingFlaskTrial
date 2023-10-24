@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -25,13 +26,13 @@ jobs:
         run: npm run build
 
       - name: Zip artifact for deployment
-        run: zip -r build.zip . -i ./build
+        run: zip -r react-app.zip . -i build/**
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v2
         with:
           name: react-app
-          path: build.zip
+          path: react-app.zip
 
   deploy:
     runs-on: ubuntu-latest
