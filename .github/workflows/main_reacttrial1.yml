@@ -52,7 +52,7 @@ jobs:
           name: react-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip react-app.zip
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
