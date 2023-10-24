@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build React app
-        run: npm run build
+        run: npm run dev
 
       - name: Zip artifact for deployment
         run: zip -r react-app.zip . -i ./build/**
