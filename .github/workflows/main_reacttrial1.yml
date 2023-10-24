@@ -30,7 +30,7 @@ jobs:
         run: npm run build
 
       - name: Zip artifact for deployment
-        run: zip -r react-app.zip ./build/**
+        run: zip -r react-app.zip . -i ./build/**
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v2
