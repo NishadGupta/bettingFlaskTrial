@@ -15,32 +15,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Python version
-        uses: actions/setup-python@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          python-version: '3.11'
-
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+          node-version: '14'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: npm install
 
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Build React app
+        run: npm run build
+
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r react-app.zip . -i build/**
 
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v3
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v2
         with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
+          name: react-app
+          path: react-app.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,7 +49,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: python-app
+          name: react-app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
